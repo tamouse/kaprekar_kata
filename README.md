@@ -5,8 +5,8 @@ Finding [Kaprekar Numbers](https://en.wikipedia.org/wiki/Kaprekar_number) -- a R
 > In mathematics, a Kaprekar number for a given base is a non-negative
   integer, the representation of whose square in that base can be
   split into two parts that add up to the original number again. For
-  instance, 45 is a Kaprekar number, because 45 squared is 2025 and 20+25 =
-  45. The Kaprekar numbers are named after D. R. Kaprekar.
+  instance, 45 is a Kaprekar number, because 45 squared is 2025 and 20+25 = 45.
+  The Kaprekar numbers are named after D. R. Kaprekar.
 
 Join the fun! Fork the repository off github and add your own
 implementation(s). Run the spec tests and benchmarks to see how your
