@@ -8,23 +8,30 @@ Finding [Kaprekar Numbers](https://en.wikipedia.org/wiki/Kaprekar_number) -- a R
   instance, 45 is a Kaprekar number, because 45 squared is 2025 and 20+25 =
   45. The Kaprekar numbers are named after D. R. Kaprekar.
 
+Join the fun! Fork the repository off github and add your own
+implementation(s). Run the spec tests and benchmarks to see how your
+implementation stacks up against the others.
+
+
 ## Installation
 
-    $ git clone git@github.com:tamouse/kaprekar_kata
+Read-only:
+
+        $ git clone git://github.com/tamouse/kaprekar_kata.git
 
 ## Usage
 
 Running spec tests:
 
-    $ rake spec
+        $ rake spec
 
 Running benchmarks:
 
-    $ rake benchmarks
+        $ rake benchmarks
 
 ## Contributing
 
-1. Fork it!
+1. Fork it! [https://github.com/tamouse/kaprekar_kata](https://github.com/tamouse/kaprekar_kata)
 2. Create a branch for your implementation.
 3. Add your examples in a module under lib/kaprekar. Use your handle/name to identify it:
 
