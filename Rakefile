@@ -1,14 +1,13 @@
 require "bundler"
-require 'rake/clean'
 require 'rspec/core/rake_task'
 
 
-RSpec::Core::RakeTask.new("spec") do |t|
-end
+desc 'see which ones actually work specs'
+RSpec::Core::RakeTask.new "spec"
 
 desc "Run benchmarks"
 task :benchmarks do |t,args|
-  sh "ruby benchmarks/benchmark.rb"
+  sh "ruby -I lib benchmarks/benchmark.rb"
 end
 
 task :default => [:spec]

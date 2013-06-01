@@ -1,5 +1,5 @@
 require 'benchmark'
-require "kaprekar.rb"
+require "kaprekar"
 
 limit=1_000_000
 
