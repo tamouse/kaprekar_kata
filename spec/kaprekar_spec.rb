@@ -1,13 +1,3 @@
-=begin rdoc
-
-= KAPREKAR_SPEC.RB
-
-*Author*::      Tamara Temple <tamara@tamaratemple.com>
-*Since*::       2013-06-01
-*Copyright*::   (c) 2013 Tamara Temple Web Development
-*License*::     MIT
-  
-=end
 
 require "spec_helper.rb"
 require "kaprekar.rb"
