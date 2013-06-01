@@ -1,0 +1,2166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>RSpec results</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Expires" content="-1" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <style type="text/css">
+  body {
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    font-size: 80%;
+  }
+  </style>
+  <script type="text/javascript">
+    // <![CDATA[
+
+function addClass(element_id, classname) {
+  document.getElementById(element_id).className += (" " + classname);
+}
+
+function removeClass(element_id, classname) {
+  var elem = document.getElementById(element_id);
+  var classlist = elem.className.replace(classname,'');
+  elem.className = classlist;
+}
+
+function moveProgressBar(percentDone) {
+  document.getElementById("rspec-header").style.width = percentDone +"%";
+}
+
+function makeRed(element_id) {
+  removeClass(element_id, 'passed');
+  removeClass(element_id, 'not_implemented');
+  addClass(element_id,'failed');
+}
+
+function makeYellow(element_id) {
+  var elem = document.getElementById(element_id);
+  if (elem.className.indexOf("failed") == -1) {  // class doesn't includes failed
+    if (elem.className.indexOf("not_implemented") == -1) { // class doesn't include not_implemented
+      removeClass(element_id, 'passed');
+      addClass(element_id,'not_implemented');
+    }
+  }
+}
+
+function apply_filters() {
+  var passed_filter = document.getElementById('passed_checkbox').checked;
+  var failed_filter = document.getElementById('failed_checkbox').checked;
+  var pending_filter = document.getElementById('pending_checkbox').checked;
+
+  assign_display_style("example passed", passed_filter);
+  assign_display_style("example failed", failed_filter);
+  assign_display_style("example not_implemented", pending_filter);
+
+  assign_display_style_for_group("example_group passed", passed_filter);
+  assign_display_style_for_group("example_group not_implemented", pending_filter, pending_filter || passed_filter);
+  assign_display_style_for_group("example_group failed", failed_filter, failed_filter || pending_filter || passed_filter);
+}
+
+function get_display_style(display_flag) {
+  var style_mode = 'none';
+  if (display_flag == true) {
+    style_mode = 'block';
+  }
+  return style_mode;
+}
+
+function assign_display_style(classname, display_flag) {
+  var style_mode = get_display_style(display_flag);
+  var elems = document.getElementsByClassName(classname)
+  for (var i=0; i<elems.length;i++) {
+    elems[i].style.display = style_mode;
+  }
+}
+
+function assign_display_style_for_group(classname, display_flag, subgroup_flag) {
+  var display_style_mode = get_display_style(display_flag);
+  var subgroup_style_mode = get_display_style(subgroup_flag);
+  var elems = document.getElementsByClassName(classname)
+  for (var i=0; i<elems.length;i++) {
+    var style_mode = display_style_mode;
+    if ((display_flag != subgroup_flag) && (elems[i].getElementsByTagName('dt')[0].innerHTML.indexOf(", ") != -1)) {
+      elems[i].style.display = subgroup_style_mode;
+    } else {
+      elems[i].style.display = display_style_mode;
+    }
+  }
+}
+
+    // ]]>
+  </script>
+  <style type="text/css">
+#rspec-header {
+  background: #65C400; color: #fff; height: 4em;
+}
+
+.rspec-report h1 {
+  margin: 0px 10px 0px 10px;
+  padding: 10px;
+  font-family: "Lucida Grande", Helvetica, sans-serif;
+  font-size: 1.8em;
+  position: absolute;
+}
+
+#label {
+  float:left;
+}
+
+#display-filters {
+  float:left;
+  padding: 28px 0 0 40%;
+  font-family: "Lucida Grande", Helvetica, sans-serif;
+}
+
+#summary {
+  float:right;
+  padding: 5px 10px;
+  font-family: "Lucida Grande", Helvetica, sans-serif;
+  text-align: right;
+}
+
+#summary p {
+  margin: 0 0 0 2px;
+}
+
+#summary #totals {
+  font-size: 1.2em;
+}
+
+.example_group {
+  margin: 0 10px 5px;
+  background: #fff;
+}
+
+dl {
+  margin: 0; padding: 0 0 5px;
+  font: normal 11px "Lucida Grande", Helvetica, sans-serif;
+}
+
+dt {
+  padding: 3px;
+  background: #65C400;
+  color: #fff;
+  font-weight: bold;
+}
+
+dd {
+  margin: 5px 0 5px 5px;
+  padding: 3px 3px 3px 18px;
+}
+
+dd .duration {
+  padding-left: 5px;
+  text-align: right;
+  right: 0px;
+  float:right;
+}
+
+dd.example.passed {
+  border-left: 5px solid #65C400;
+  border-bottom: 1px solid #65C400;
+  background: #DBFFB4; color: #3D7700;
+}
+
+dd.example.not_implemented {
+  border-left: 5px solid #FAF834;
+  border-bottom: 1px solid #FAF834;
+  background: #FCFB98; color: #131313;
+}
+
+dd.example.pending_fixed {
+  border-left: 5px solid #0000C2;
+  border-bottom: 1px solid #0000C2;
+  color: #0000C2; background: #D3FBFF;
+}
+
+dd.example.failed {
+  border-left: 5px solid #C20000;
+  border-bottom: 1px solid #C20000;
+  color: #C20000; background: #FFFBD3;
+}
+
+
+dt.not_implemented {
+  color: #000000; background: #FAF834;
+}
+
+dt.pending_fixed {
+  color: #FFFFFF; background: #C40D0D;
+}
+
+dt.failed {
+  color: #FFFFFF; background: #C40D0D;
+}
+
+
+#rspec-header.not_implemented {
+  color: #000000; background: #FAF834;
+}
+
+#rspec-header.pending_fixed {
+  color: #FFFFFF; background: #C40D0D;
+}
+
+#rspec-header.failed {
+  color: #FFFFFF; background: #C40D0D;
+}
+
+
+.backtrace {
+  color: #000;
+  font-size: 12px;
+}
+
+a {
+  color: #BE5C00;
+}
+
+/* Ruby code, style similar to vibrant ink */
+.ruby {
+  font-size: 12px;
+  font-family: monospace;
+  color: white;
+  background-color: black;
+  padding: 0.1em 0 0.2em 0;
+}
+
+.ruby .keyword { color: #FF6600; }
+.ruby .constant { color: #339999; }
+.ruby .attribute { color: white; }
+.ruby .global { color: white; }
+.ruby .module { color: white; }
+.ruby .class { color: white; }
+.ruby .string { color: #66FF00; }
+.ruby .ident { color: white; }
+.ruby .method { color: #FFCC00; }
+.ruby .number { color: white; }
+.ruby .char { color: white; }
+.ruby .comment { color: #9933CC; }
+.ruby .symbol { color: white; }
+.ruby .regex { color: #44B4CC; }
+.ruby .punct { color: white; }
+.ruby .escape { color: white; }
+.ruby .interp { color: white; }
+.ruby .expr { color: white; }
+
+.ruby .offending { background-color: gray; }
+.ruby .linenum {
+  width: 75px;
+  padding: 0.1em 1em 0.2em 0;
+  color: #000000;
+  background-color: #FFFBD3;
+}
+
+  </style>
+</head>
+<body>
+<div class="rspec-report">
+
+<div id="rspec-header">
+  <div id="label">
+    <h1>RSpec Code Examples</h1>
+  </div>
+
+  <div id="display-filters">
+    <input id="passed_checkbox" name="passed_checkbox" type="checkbox" checked onchange="apply_filters()" value="1"> <label for="passed_checkbox">Passed</label>
+    <input id="failed_checkbox" name="failed_checkbox" type="checkbox" checked onchange="apply_filters()" value="2"> <label for="failed_checkbox">Failed</label>
+    <input id="pending_checkbox" name="pending_checkbox" type="checkbox" checked onchange="apply_filters()" value="3"> <label for="pending_checkbox">Pending</label>
+  </div>
+
+  <div id="summary">
+    <p id="totals">&nbsp;</p>
+    <p id="duration">&nbsp;</p>
+  </div>
+</div>
+
+
+<div class="results">
+<div id="div_group_1" class="example_group passed">
+  <dl style="margin-left: 0px;">
+  <dt id="example_group_1" class="passed">Kaprekar::Alphonse23</dt>
+    <script type="text/javascript">moveProgressBar('0.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">should respond to #kaprekar0?</span><span class='duration'>0.00085s</span></dd>
+    <script type="text/javascript">moveProgressBar('0.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">should respond to #kaprekar1?</span><span class='duration'>0.00009s</span></dd>
+    <script type="text/javascript">moveProgressBar('0.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">should respond to #kaprekar3?</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('0.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">should respond to #kaprekar4?</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('0.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">should respond to #kaprekar5?</span><span class='duration'>0.00008s</span></dd>
+  </dl>
+</div>
+<div id="div_group_2" class="example_group passed">
+  <dl style="margin-left: 15px;">
+  <dt id="example_group_2" class="passed">#kaprekar0?</dt>
+    <script type="text/javascript">makeRed('rspec-header');</script>
+    <script type="text/javascript">makeRed('div_group_2');</script>
+    <script type="text/javascript">makeRed('example_group_2');</script>
+    <script type="text/javascript">moveProgressBar('0.9');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">1 should be kaprekar</span>
+      <span class="duration">0.00955s</span>
+      <div class="failure" id="failure_1">
+        <div class="message"><pre>expected: true value
+     got: false</pre></div>
+        <div class="backtrace"><pre>./spec/kaprekar/alphonse23_spec.rb:21:in `block (5 levels) in <module:Kaprekar>'</pre></div>
+    <pre class="ruby"><code><span class="linenum">19</span>        GOOD_KAPREKAR.each do |k|
+<span class="linenum">20</span>          it "#{k} should be kaprekar" do
+<span class="offending"><span class="linenum">21</span>            Kaprekar::Alphonse23.send(m,k).should be_true</span>
+<span class="linenum">22</span>          end
+<span class="linenum">23</span>        end
+<span class="linenum">24</span><span class="comment"># gem install syntax to get syntax highlighting</span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('1.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">9 should be kaprekar</span><span class='duration'>0.00009s</span></dd>
+    <script type="text/javascript">moveProgressBar('1.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">45 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('1.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">55 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('1.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">99 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('1.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">297 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('1.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">703 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('2.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">999 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('2.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">2223 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('2.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">2728 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('2.4');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">4879 should be kaprekar</span>
+      <span class="duration">0.00011s</span>
+      <div class="failure" id="failure_2">
+        <div class="message"><pre>expected: true value
+     got: false</pre></div>
+        <div class="backtrace"><pre>./spec/kaprekar/alphonse23_spec.rb:21:in `block (5 levels) in <module:Kaprekar>'</pre></div>
+    <pre class="ruby"><code><span class="linenum">19</span>        GOOD_KAPREKAR.each do |k|
+<span class="linenum">20</span>          it "#{k} should be kaprekar" do
+<span class="offending"><span class="linenum">21</span>            Kaprekar::Alphonse23.send(m,k).should be_true</span>
+<span class="linenum">22</span>          end
+<span class="linenum">23</span>        end
+<span class="linenum">24</span><span class="comment"># gem install syntax to get syntax highlighting</span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('2.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">4950 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('2.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">5050 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('2.9');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">5292 should be kaprekar</span>
+      <span class="duration">0.00011s</span>
+      <div class="failure" id="failure_3">
+        <div class="message"><pre>expected: true value
+     got: false</pre></div>
+        <div class="backtrace"><pre>./spec/kaprekar/alphonse23_spec.rb:21:in `block (5 levels) in <module:Kaprekar>'</pre></div>
+    <pre class="ruby"><code><span class="linenum">19</span>        GOOD_KAPREKAR.each do |k|
+<span class="linenum">20</span>          it "#{k} should be kaprekar" do
+<span class="offending"><span class="linenum">21</span>            Kaprekar::Alphonse23.send(m,k).should be_true</span>
+<span class="linenum">22</span>          end
+<span class="linenum">23</span>        end
+<span class="linenum">24</span><span class="comment"># gem install syntax to get syntax highlighting</span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('3.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">7272 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('3.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">7777 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('3.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">9999 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('3.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">17344 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('3.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">22222 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('3.8');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">38962 should be kaprekar</span>
+      <span class="duration">0.00014s</span>
+      <div class="failure" id="failure_4">
+        <div class="message"><pre>expected: true value
+     got: false</pre></div>
+        <div class="backtrace"><pre>./spec/kaprekar/alphonse23_spec.rb:21:in `block (5 levels) in <module:Kaprekar>'</pre></div>
+    <pre class="ruby"><code><span class="linenum">19</span>        GOOD_KAPREKAR.each do |k|
+<span class="linenum">20</span>          it "#{k} should be kaprekar" do
+<span class="offending"><span class="linenum">21</span>            Kaprekar::Alphonse23.send(m,k).should be_true</span>
+<span class="linenum">22</span>          end
+<span class="linenum">23</span>        end
+<span class="linenum">24</span><span class="comment"># gem install syntax to get syntax highlighting</span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('4.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">77778 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('4.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">82656 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('4.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">95121 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('4.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">99999 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('4.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">142857 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('4.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">148149 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('4.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">181819 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('5.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">187110 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('5.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">208495 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('5.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">318682 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('5.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">329967 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('5.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">351352 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('5.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">356643 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('6.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">390313 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('6.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">461539 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('6.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">466830 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('6.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">499500 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('6.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">500500 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('6.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">533170 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('6.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">-10 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('7.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">-9 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('7.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">-1 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('7.4');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">0 should NOT be kaprekar</span>
+      <span class="duration">0.00011s</span>
+      <div class="failure" id="failure_5">
+        <div class="message"><pre>expected: non-true value
+     got: true</pre></div>
+        <div class="backtrace"><pre>./spec/kaprekar/alphonse23_spec.rb:26:in `block (5 levels) in <module:Kaprekar>'</pre></div>
+    <pre class="ruby"><code><span class="linenum">24</span>        NOT_KAPREKAR.each do |k|
+<span class="linenum">25</span>          it "#{k} should NOT be kaprekar" do
+<span class="offending"><span class="linenum">26</span>            Kaprekar::Alphonse23.send(m,k).should_not be_true</span>
+<span class="linenum">27</span>          end
+<span class="linenum">28</span>        end
+<span class="linenum">29</span><span class="comment"># gem install syntax to get syntax highlighting</span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('7.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">5 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('7.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">7 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('7.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">10 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('8.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">100 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('8.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">122 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('8.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">1000 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('8.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">1004 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('8.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">10000 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('8.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">100000 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('8.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">1000000 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+  </dl>
+</div>
+<div id="div_group_3" class="example_group passed">
+  <dl style="margin-left: 15px;">
+  <dt id="example_group_3" class="passed">#kaprekar1?</dt>
+    <script type="text/javascript">makeRed('div_group_3');</script>
+    <script type="text/javascript">makeRed('example_group_3');</script>
+    <script type="text/javascript">moveProgressBar('9.1');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">1 should be kaprekar</span>
+      <span class="duration">0.00011s</span>
+      <div class="failure" id="failure_6">
+        <div class="message"><pre>expected: true value
+     got: false</pre></div>
+        <div class="backtrace"><pre>./spec/kaprekar/alphonse23_spec.rb:21:in `block (5 levels) in <module:Kaprekar>'</pre></div>
+    <pre class="ruby"><code><span class="linenum">19</span>        GOOD_KAPREKAR.each do |k|
+<span class="linenum">20</span>          it "#{k} should be kaprekar" do
+<span class="offending"><span class="linenum">21</span>            Kaprekar::Alphonse23.send(m,k).should be_true</span>
+<span class="linenum">22</span>          end
+<span class="linenum">23</span>        end
+<span class="linenum">24</span><span class="comment"># gem install syntax to get syntax highlighting</span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('9.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">9 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('9.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">45 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('9.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">55 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('9.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">99 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('9.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">297 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('10.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">703 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('10.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">999 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('10.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">2223 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('10.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">2728 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('10.6');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">4879 should be kaprekar</span>
+      <span class="duration">0.00011s</span>
+      <div class="failure" id="failure_7">
+        <div class="message"><pre>expected: true value
+     got: false</pre></div>
+        <div class="backtrace"><pre>./spec/kaprekar/alphonse23_spec.rb:21:in `block (5 levels) in <module:Kaprekar>'</pre></div>
+    <pre class="ruby"><code><span class="linenum">19</span>        GOOD_KAPREKAR.each do |k|
+<span class="linenum">20</span>          it "#{k} should be kaprekar" do
+<span class="offending"><span class="linenum">21</span>            Kaprekar::Alphonse23.send(m,k).should be_true</span>
+<span class="linenum">22</span>          end
+<span class="linenum">23</span>        end
+<span class="linenum">24</span><span class="comment"># gem install syntax to get syntax highlighting</span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('10.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">4950 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('10.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">5050 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('11.1');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">5292 should be kaprekar</span>
+      <span class="duration">0.00011s</span>
+      <div class="failure" id="failure_8">
+        <div class="message"><pre>expected: true value
+     got: false</pre></div>
+        <div class="backtrace"><pre>./spec/kaprekar/alphonse23_spec.rb:21:in `block (5 levels) in <module:Kaprekar>'</pre></div>
+    <pre class="ruby"><code><span class="linenum">19</span>        GOOD_KAPREKAR.each do |k|
+<span class="linenum">20</span>          it "#{k} should be kaprekar" do
+<span class="offending"><span class="linenum">21</span>            Kaprekar::Alphonse23.send(m,k).should be_true</span>
+<span class="linenum">22</span>          end
+<span class="linenum">23</span>        end
+<span class="linenum">24</span><span class="comment"># gem install syntax to get syntax highlighting</span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('11.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">7272 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('11.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">7777 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('11.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">9999 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('11.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">17344 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('11.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">22222 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('12.0');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">38962 should be kaprekar</span>
+      <span class="duration">0.00012s</span>
+      <div class="failure" id="failure_9">
+        <div class="message"><pre>expected: true value
+     got: false</pre></div>
+        <div class="backtrace"><pre>./spec/kaprekar/alphonse23_spec.rb:21:in `block (5 levels) in <module:Kaprekar>'</pre></div>
+    <pre class="ruby"><code><span class="linenum">19</span>        GOOD_KAPREKAR.each do |k|
+<span class="linenum">20</span>          it "#{k} should be kaprekar" do
+<span class="offending"><span class="linenum">21</span>            Kaprekar::Alphonse23.send(m,k).should be_true</span>
+<span class="linenum">22</span>          end
+<span class="linenum">23</span>        end
+<span class="linenum">24</span><span class="comment"># gem install syntax to get syntax highlighting</span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('12.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">77778 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('12.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">82656 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('12.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">95121 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('12.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">99999 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('12.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">142857 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('12.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">148149 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('13.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">181819 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('13.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">187110 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('13.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">208495 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('13.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">318682 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('13.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">329967 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('13.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">351352 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('14.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">356643 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('14.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">390313 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('14.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">461539 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('14.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">466830 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('14.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">499500 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('14.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">500500 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('14.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">533170 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('15.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">-10 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('15.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">-9 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('15.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">-1 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('15.5');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">0 should NOT be kaprekar</span>
+      <span class="duration">0.00011s</span>
+      <div class="failure" id="failure_10">
+        <div class="message"><pre>expected: non-true value
+     got: true</pre></div>
+        <div class="backtrace"><pre>./spec/kaprekar/alphonse23_spec.rb:26:in `block (5 levels) in <module:Kaprekar>'</pre></div>
+    <pre class="ruby"><code><span class="linenum">24</span>        NOT_KAPREKAR.each do |k|
+<span class="linenum">25</span>          it "#{k} should NOT be kaprekar" do
+<span class="offending"><span class="linenum">26</span>            Kaprekar::Alphonse23.send(m,k).should_not be_true</span>
+<span class="linenum">27</span>          end
+<span class="linenum">28</span>        end
+<span class="linenum">29</span><span class="comment"># gem install syntax to get syntax highlighting</span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('15.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">5 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('15.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">7 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('16.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">10 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('16.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">100 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('16.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">122 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('16.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">1000 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('16.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">1004 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('16.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">10000 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('16.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">100000 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('17.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">1000000 should NOT be kaprekar</span><span class='duration'>0.00009s</span></dd>
+  </dl>
+</div>
+<div id="div_group_4" class="example_group passed">
+  <dl style="margin-left: 15px;">
+  <dt id="example_group_4" class="passed">#kaprekar3?</dt>
+    <script type="text/javascript">makeRed('div_group_4');</script>
+    <script type="text/javascript">makeRed('example_group_4');</script>
+    <script type="text/javascript">moveProgressBar('17.2');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">1 should be kaprekar</span>
+      <span class="duration">0.00013s</span>
+      <div class="failure" id="failure_11">
+        <div class="message"><pre>expected: true value
+     got: false</pre></div>
+        <div class="backtrace"><pre>./spec/kaprekar/alphonse23_spec.rb:21:in `block (5 levels) in <module:Kaprekar>'</pre></div>
+    <pre class="ruby"><code><span class="linenum">19</span>        GOOD_KAPREKAR.each do |k|
+<span class="linenum">20</span>          it "#{k} should be kaprekar" do
+<span class="offending"><span class="linenum">21</span>            Kaprekar::Alphonse23.send(m,k).should be_true</span>
+<span class="linenum">22</span>          end
+<span class="linenum">23</span>        end
+<span class="linenum">24</span><span class="comment"># gem install syntax to get syntax highlighting</span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('17.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">9 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('17.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">45 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('17.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">55 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('17.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">99 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('18.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">297 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('18.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">703 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('18.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">999 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('18.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">2223 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('18.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">2728 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('18.8');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">4879 should be kaprekar</span>
+      <span class="duration">0.00011s</span>
+      <div class="failure" id="failure_12">
+        <div class="message"><pre>expected: true value
+     got: false</pre></div>
+        <div class="backtrace"><pre>./spec/kaprekar/alphonse23_spec.rb:21:in `block (5 levels) in <module:Kaprekar>'</pre></div>
+    <pre class="ruby"><code><span class="linenum">19</span>        GOOD_KAPREKAR.each do |k|
+<span class="linenum">20</span>          it "#{k} should be kaprekar" do
+<span class="offending"><span class="linenum">21</span>            Kaprekar::Alphonse23.send(m,k).should be_true</span>
+<span class="linenum">22</span>          end
+<span class="linenum">23</span>        end
+<span class="linenum">24</span><span class="comment"># gem install syntax to get syntax highlighting</span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('18.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">4950 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('19.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">5050 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('19.2');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">5292 should be kaprekar</span>
+      <span class="duration">0.00011s</span>
+      <div class="failure" id="failure_13">
+        <div class="message"><pre>expected: true value
+     got: false</pre></div>
+        <div class="backtrace"><pre>./spec/kaprekar/alphonse23_spec.rb:21:in `block (5 levels) in <module:Kaprekar>'</pre></div>
+    <pre class="ruby"><code><span class="linenum">19</span>        GOOD_KAPREKAR.each do |k|
+<span class="linenum">20</span>          it "#{k} should be kaprekar" do
+<span class="offending"><span class="linenum">21</span>            Kaprekar::Alphonse23.send(m,k).should be_true</span>
+<span class="linenum">22</span>          end
+<span class="linenum">23</span>        end
+<span class="linenum">24</span><span class="comment"># gem install syntax to get syntax highlighting</span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('19.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">7272 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('19.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">7777 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('19.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">9999 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('19.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">17344 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('20.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">22222 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('20.2');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">38962 should be kaprekar</span>
+      <span class="duration">0.00012s</span>
+      <div class="failure" id="failure_14">
+        <div class="message"><pre>expected: true value
+     got: false</pre></div>
+        <div class="backtrace"><pre>./spec/kaprekar/alphonse23_spec.rb:21:in `block (5 levels) in <module:Kaprekar>'</pre></div>
+    <pre class="ruby"><code><span class="linenum">19</span>        GOOD_KAPREKAR.each do |k|
+<span class="linenum">20</span>          it "#{k} should be kaprekar" do
+<span class="offending"><span class="linenum">21</span>            Kaprekar::Alphonse23.send(m,k).should be_true</span>
+<span class="linenum">22</span>          end
+<span class="linenum">23</span>        end
+<span class="linenum">24</span><span class="comment"># gem install syntax to get syntax highlighting</span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('20.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">77778 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('20.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">82656 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('20.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">95121 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('20.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">99999 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('20.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">142857 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('21.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">148149 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('21.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">181819 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('21.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">187110 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('21.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">208495 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('21.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">318682 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('21.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">329967 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('22.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">351352 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('22.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">356643 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('22.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">390313 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('22.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">461539 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('22.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">466830 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('22.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">499500 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('22.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">500500 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('23.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">533170 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('23.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">-10 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('23.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">-9 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('23.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">-1 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('23.7');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">0 should NOT be kaprekar</span>
+      <span class="duration">0.00012s</span>
+      <div class="failure" id="failure_15">
+        <div class="message"><pre>expected: non-true value
+     got: true</pre></div>
+        <div class="backtrace"><pre>./spec/kaprekar/alphonse23_spec.rb:26:in `block (5 levels) in <module:Kaprekar>'</pre></div>
+    <pre class="ruby"><code><span class="linenum">24</span>        NOT_KAPREKAR.each do |k|
+<span class="linenum">25</span>          it "#{k} should NOT be kaprekar" do
+<span class="offending"><span class="linenum">26</span>            Kaprekar::Alphonse23.send(m,k).should_not be_true</span>
+<span class="linenum">27</span>          end
+<span class="linenum">28</span>        end
+<span class="linenum">29</span><span class="comment"># gem install syntax to get syntax highlighting</span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('23.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">5 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('24.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">7 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('24.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">10 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('24.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">100 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('24.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">122 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('24.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">1000 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('24.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">1004 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('25.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">10000 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('25.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">100000 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('25.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">1000000 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+  </dl>
+</div>
+<div id="div_group_5" class="example_group passed">
+  <dl style="margin-left: 15px;">
+  <dt id="example_group_5" class="passed">#kaprekar4?</dt>
+    <script type="text/javascript">makeRed('div_group_5');</script>
+    <script type="text/javascript">makeRed('example_group_5');</script>
+    <script type="text/javascript">moveProgressBar('25.4');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">1 should be kaprekar</span>
+      <span class="duration">0.00011s</span>
+      <div class="failure" id="failure_16">
+        <div class="message"><pre>expected: true value
+     got: false</pre></div>
+        <div class="backtrace"><pre>./spec/kaprekar/alphonse23_spec.rb:21:in `block (5 levels) in <module:Kaprekar>'</pre></div>
+    <pre class="ruby"><code><span class="linenum">19</span>        GOOD_KAPREKAR.each do |k|
+<span class="linenum">20</span>          it "#{k} should be kaprekar" do
+<span class="offending"><span class="linenum">21</span>            Kaprekar::Alphonse23.send(m,k).should be_true</span>
+<span class="linenum">22</span>          end
+<span class="linenum">23</span>        end
+<span class="linenum">24</span><span class="comment"># gem install syntax to get syntax highlighting</span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('25.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">9 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('25.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">45 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('25.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">55 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('26.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">99 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('26.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">297 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('26.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">703 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('26.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">999 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('26.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">2223 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('26.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">2728 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('27.0');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">4879 should be kaprekar</span>
+      <span class="duration">0.00012s</span>
+      <div class="failure" id="failure_17">
+        <div class="message"><pre>expected: true value
+     got: false</pre></div>
+        <div class="backtrace"><pre>./spec/kaprekar/alphonse23_spec.rb:21:in `block (5 levels) in <module:Kaprekar>'</pre></div>
+    <pre class="ruby"><code><span class="linenum">19</span>        GOOD_KAPREKAR.each do |k|
+<span class="linenum">20</span>          it "#{k} should be kaprekar" do
+<span class="offending"><span class="linenum">21</span>            Kaprekar::Alphonse23.send(m,k).should be_true</span>
+<span class="linenum">22</span>          end
+<span class="linenum">23</span>        end
+<span class="linenum">24</span><span class="comment"># gem install syntax to get syntax highlighting</span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('27.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">4950 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('27.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">5050 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('27.4');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">5292 should be kaprekar</span>
+      <span class="duration">0.00011s</span>
+      <div class="failure" id="failure_18">
+        <div class="message"><pre>expected: true value
+     got: false</pre></div>
+        <div class="backtrace"><pre>./spec/kaprekar/alphonse23_spec.rb:21:in `block (5 levels) in <module:Kaprekar>'</pre></div>
+    <pre class="ruby"><code><span class="linenum">19</span>        GOOD_KAPREKAR.each do |k|
+<span class="linenum">20</span>          it "#{k} should be kaprekar" do
+<span class="offending"><span class="linenum">21</span>            Kaprekar::Alphonse23.send(m,k).should be_true</span>
+<span class="linenum">22</span>          end
+<span class="linenum">23</span>        end
+<span class="linenum">24</span><span class="comment"># gem install syntax to get syntax highlighting</span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('27.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">7272 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('27.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">7777 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('27.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">9999 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('28.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">17344 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('28.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">22222 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('28.3');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">38962 should be kaprekar</span>
+      <span class="duration">0.00012s</span>
+      <div class="failure" id="failure_19">
+        <div class="message"><pre>expected: true value
+     got: false</pre></div>
+        <div class="backtrace"><pre>./spec/kaprekar/alphonse23_spec.rb:21:in `block (5 levels) in <module:Kaprekar>'</pre></div>
+    <pre class="ruby"><code><span class="linenum">19</span>        GOOD_KAPREKAR.each do |k|
+<span class="linenum">20</span>          it "#{k} should be kaprekar" do
+<span class="offending"><span class="linenum">21</span>            Kaprekar::Alphonse23.send(m,k).should be_true</span>
+<span class="linenum">22</span>          end
+<span class="linenum">23</span>        end
+<span class="linenum">24</span><span class="comment"># gem install syntax to get syntax highlighting</span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('28.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">77778 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('28.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">82656 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('28.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">95121 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('29.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">99999 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('29.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">142857 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('29.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">148149 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('29.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">181819 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('29.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">187110 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('29.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">208495 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('29.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">318682 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('30.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">329967 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('30.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">351352 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('30.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">356643 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('30.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">390313 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('30.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">461539 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('30.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">466830 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('31.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">499500 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('31.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">500500 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('31.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">533170 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('31.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">-10 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('31.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">-9 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('31.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">-1 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('31.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">0 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('32.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">5 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('32.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">7 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('32.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">10 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('32.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">100 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('32.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">122 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('32.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">1000 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('33.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">1004 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('33.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">10000 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('33.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">100000 should NOT be kaprekar</span><span class='duration'>0.00009s</span></dd>
+    <script type="text/javascript">moveProgressBar('33.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">1000000 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+  </dl>
+</div>
+<div id="div_group_6" class="example_group passed">
+  <dl style="margin-left: 15px;">
+  <dt id="example_group_6" class="passed">#kaprekar5?</dt>
+    <script type="text/javascript">makeRed('div_group_6');</script>
+    <script type="text/javascript">makeRed('example_group_6');</script>
+    <script type="text/javascript">moveProgressBar('33.6');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">1 should be kaprekar</span>
+      <span class="duration">0.00011s</span>
+      <div class="failure" id="failure_20">
+        <div class="message"><pre>expected: true value
+     got: false</pre></div>
+        <div class="backtrace"><pre>./spec/kaprekar/alphonse23_spec.rb:21:in `block (5 levels) in <module:Kaprekar>'</pre></div>
+    <pre class="ruby"><code><span class="linenum">19</span>        GOOD_KAPREKAR.each do |k|
+<span class="linenum">20</span>          it "#{k} should be kaprekar" do
+<span class="offending"><span class="linenum">21</span>            Kaprekar::Alphonse23.send(m,k).should be_true</span>
+<span class="linenum">22</span>          end
+<span class="linenum">23</span>        end
+<span class="linenum">24</span><span class="comment"># gem install syntax to get syntax highlighting</span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('33.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">9 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('33.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">45 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('34.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">55 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('34.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">99 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('34.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">297 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('34.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">703 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('34.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">999 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('34.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">2223 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('35.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">2728 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('35.1');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">4879 should be kaprekar</span>
+      <span class="duration">0.00011s</span>
+      <div class="failure" id="failure_21">
+        <div class="message"><pre>expected: true value
+     got: false</pre></div>
+        <div class="backtrace"><pre>./spec/kaprekar/alphonse23_spec.rb:21:in `block (5 levels) in <module:Kaprekar>'</pre></div>
+    <pre class="ruby"><code><span class="linenum">19</span>        GOOD_KAPREKAR.each do |k|
+<span class="linenum">20</span>          it "#{k} should be kaprekar" do
+<span class="offending"><span class="linenum">21</span>            Kaprekar::Alphonse23.send(m,k).should be_true</span>
+<span class="linenum">22</span>          end
+<span class="linenum">23</span>        end
+<span class="linenum">24</span><span class="comment"># gem install syntax to get syntax highlighting</span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('35.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">4950 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('35.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">5050 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('35.6');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">5292 should be kaprekar</span>
+      <span class="duration">0.00011s</span>
+      <div class="failure" id="failure_22">
+        <div class="message"><pre>expected: true value
+     got: false</pre></div>
+        <div class="backtrace"><pre>./spec/kaprekar/alphonse23_spec.rb:21:in `block (5 levels) in <module:Kaprekar>'</pre></div>
+    <pre class="ruby"><code><span class="linenum">19</span>        GOOD_KAPREKAR.each do |k|
+<span class="linenum">20</span>          it "#{k} should be kaprekar" do
+<span class="offending"><span class="linenum">21</span>            Kaprekar::Alphonse23.send(m,k).should be_true</span>
+<span class="linenum">22</span>          end
+<span class="linenum">23</span>        end
+<span class="linenum">24</span><span class="comment"># gem install syntax to get syntax highlighting</span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('35.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">7272 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('35.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">7777 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('36.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">9999 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('36.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">17344 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('36.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">22222 should be kaprekar</span><span class='duration'>0.00009s</span></dd>
+    <script type="text/javascript">moveProgressBar('36.5');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">38962 should be kaprekar</span>
+      <span class="duration">0.00011s</span>
+      <div class="failure" id="failure_23">
+        <div class="message"><pre>expected: true value
+     got: false</pre></div>
+        <div class="backtrace"><pre>./spec/kaprekar/alphonse23_spec.rb:21:in `block (5 levels) in <module:Kaprekar>'</pre></div>
+    <pre class="ruby"><code><span class="linenum">19</span>        GOOD_KAPREKAR.each do |k|
+<span class="linenum">20</span>          it "#{k} should be kaprekar" do
+<span class="offending"><span class="linenum">21</span>            Kaprekar::Alphonse23.send(m,k).should be_true</span>
+<span class="linenum">22</span>          end
+<span class="linenum">23</span>        end
+<span class="linenum">24</span><span class="comment"># gem install syntax to get syntax highlighting</span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('36.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">77778 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('36.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">82656 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('37.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">95121 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('37.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">99999 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('37.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">142857 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('37.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">148149 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('37.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">181819 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('37.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">187110 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('37.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">208495 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('38.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">318682 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('38.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">329967 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('38.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">351352 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('38.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">356643 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('38.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">390313 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('38.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">461539 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('39.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">466830 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('39.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">499500 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('39.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">500500 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('39.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">533170 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('39.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">-10 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('39.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">-9 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('39.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">-1 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('40.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">0 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('40.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">5 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('40.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">7 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('40.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">10 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('40.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">100 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('40.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">122 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('41.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">1000 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('41.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">1004 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('41.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">10000 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('41.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">100000 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('41.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">1000000 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+  </dl>
+</div>
+<div id="div_group_7" class="example_group passed">
+  <dl style="margin-left: 0px;">
+  <dt id="example_group_7" class="passed">Kaprekar::HarryKakueki</dt>
+    <script type="text/javascript">moveProgressBar('41.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">should respond to #try1</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('41.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">should respond to #try2</span><span class='duration'>0.00009s</span></dd>
+  </dl>
+</div>
+<div id="div_group_8" class="example_group passed">
+  <dl style="margin-left: 15px;">
+  <dt id="example_group_8" class="passed">#try1</dt>
+    <script type="text/javascript">moveProgressBar('42.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">1 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('42.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">9 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('42.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">45 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('42.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">55 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('42.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">99 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('42.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">297 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('43.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">703 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('43.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">999 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('43.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">2223 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('43.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">2728 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('43.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">4879 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('43.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">4950 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('43.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">5050 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('44.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">5292 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('44.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">7272 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('44.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">7777 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('44.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">9999 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('44.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">17344 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('44.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">22222 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('45.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">38962 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('45.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">77778 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('45.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">82656 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('45.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">95121 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('45.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">99999 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('45.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">142857 should be kaprekar</span><span class='duration'>0.00009s</span></dd>
+    <script type="text/javascript">moveProgressBar('45.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">148149 should be kaprekar</span><span class='duration'>0.00009s</span></dd>
+    <script type="text/javascript">moveProgressBar('46.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">181819 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('46.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">187110 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('46.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">208495 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('46.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">318682 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('46.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">329967 should be kaprekar</span><span class='duration'>0.00009s</span></dd>
+    <script type="text/javascript">moveProgressBar('46.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">351352 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('47.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">356643 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('47.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">390313 should be kaprekar</span><span class='duration'>0.00009s</span></dd>
+    <script type="text/javascript">moveProgressBar('47.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">461539 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('47.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">466830 should be kaprekar</span><span class='duration'>0.00009s</span></dd>
+    <script type="text/javascript">moveProgressBar('47.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">499500 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('47.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">500500 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('47.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">533170 should be kaprekar</span><span class='duration'>0.00009s</span></dd>
+    <script type="text/javascript">moveProgressBar('48.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">-10 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('48.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">-9 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('48.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">-1 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">makeRed('div_group_8');</script>
+    <script type="text/javascript">makeRed('example_group_8');</script>
+    <script type="text/javascript">moveProgressBar('48.6');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">0 should NOT be kaprekar</span>
+      <span class="duration">0.00012s</span>
+      <div class="failure" id="failure_24">
+        <div class="message"><pre>expected: non-true value
+     got: true</pre></div>
+        <div class="backtrace"><pre>./spec/kaprekar/harrykakueki_spec.rb:23:in `block (5 levels) in <module:Kaprekar>'</pre></div>
+    <pre class="ruby"><code><span class="linenum">21</span>        NOT_KAPREKAR.each do |k|
+<span class="linenum">22</span>          it "#{k} should NOT be kaprekar" do
+<span class="offending"><span class="linenum">23</span>            Kaprekar::HarryKakueki.send(m,k).should_not be_true</span>
+<span class="linenum">24</span>          end
+<span class="linenum">25</span>        end
+<span class="linenum">26</span><span class="comment"># gem install syntax to get syntax highlighting</span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('48.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">5 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('48.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">7 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('49.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">10 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('49.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">100 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('49.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">122 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('49.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">1000 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('49.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">1004 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('49.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">10000 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('50.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">100000 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('50.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">1000000 should NOT be kaprekar</span><span class='duration'>0.00009s</span></dd>
+  </dl>
+</div>
+<div id="div_group_9" class="example_group passed">
+  <dl style="margin-left: 15px;">
+  <dt id="example_group_9" class="passed">#try2</dt>
+    <script type="text/javascript">moveProgressBar('50.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">1 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('50.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">9 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('50.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">45 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('50.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">55 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('50.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">99 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('51.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">297 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('51.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">703 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('51.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">999 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('51.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">2223 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('51.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">2728 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('51.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">4879 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('52.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">4950 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('52.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">5050 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('52.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">5292 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('52.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">7272 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('52.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">7777 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('52.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">9999 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('52.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">17344 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('53.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">22222 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('53.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">38962 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('53.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">77778 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('53.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">82656 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('53.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">95121 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('53.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">99999 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('54.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">142857 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('54.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">148149 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('54.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">181819 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('54.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">187110 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('54.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">208495 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('54.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">318682 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('54.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">329967 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('55.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">351352 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('55.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">356643 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('55.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">390313 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('55.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">461539 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('55.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">466830 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('55.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">499500 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('56.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">500500 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('56.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">533170 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('56.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">-10 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('56.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">-9 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('56.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">-1 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">makeRed('div_group_9');</script>
+    <script type="text/javascript">makeRed('example_group_9');</script>
+    <script type="text/javascript">moveProgressBar('56.7');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">0 should NOT be kaprekar</span>
+      <span class="duration">0.00011s</span>
+      <div class="failure" id="failure_25">
+        <div class="message"><pre>expected: non-true value
+     got: true</pre></div>
+        <div class="backtrace"><pre>./spec/kaprekar/harrykakueki_spec.rb:23:in `block (5 levels) in <module:Kaprekar>'</pre></div>
+    <pre class="ruby"><code><span class="linenum">21</span>        NOT_KAPREKAR.each do |k|
+<span class="linenum">22</span>          it "#{k} should NOT be kaprekar" do
+<span class="offending"><span class="linenum">23</span>            Kaprekar::HarryKakueki.send(m,k).should_not be_true</span>
+<span class="linenum">24</span>          end
+<span class="linenum">25</span>        end
+<span class="linenum">26</span><span class="comment"># gem install syntax to get syntax highlighting</span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('56.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">5 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('57.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">7 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('57.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">10 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('57.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">100 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('57.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">122 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('57.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">1000 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('57.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">1004 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('58.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">10000 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('58.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">100000 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('58.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">1000000 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+  </dl>
+</div>
+<div id="div_group_10" class="example_group passed">
+  <dl style="margin-left: 0px;">
+  <dt id="example_group_10" class="passed">Kaprekar::JoshCreek</dt>
+    <script type="text/javascript">moveProgressBar('58.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">should respond to #kaprekar?</span><span class='duration'>0.00010s</span></dd>
+  </dl>
+</div>
+<div id="div_group_11" class="example_group passed">
+  <dl style="margin-left: 15px;">
+  <dt id="example_group_11" class="passed">#kaprekar?</dt>
+    <script type="text/javascript">moveProgressBar('58.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">1 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('58.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">9 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('58.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">45 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('59.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">55 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('59.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">99 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('59.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">297 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('59.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">703 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('59.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">999 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('59.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">2223 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('60.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">2728 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('60.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">4879 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('60.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">4950 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('60.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">5050 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('60.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">5292 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('60.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">7272 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('60.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">7777 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('61.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">9999 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('61.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">17344 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('61.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">22222 should be kaprekar</span><span class='duration'>0.00009s</span></dd>
+    <script type="text/javascript">moveProgressBar('61.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">38962 should be kaprekar</span><span class='duration'>0.00009s</span></dd>
+    <script type="text/javascript">moveProgressBar('61.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">77778 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('61.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">82656 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('62.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">95121 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('62.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">99999 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('62.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">142857 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('62.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">148149 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('62.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">181819 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('62.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">187110 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('62.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">208495 should be kaprekar</span><span class='duration'>0.00009s</span></dd>
+    <script type="text/javascript">moveProgressBar('63.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">318682 should be kaprekar</span><span class='duration'>0.00009s</span></dd>
+    <script type="text/javascript">moveProgressBar('63.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">329967 should be kaprekar</span><span class='duration'>0.00009s</span></dd>
+    <script type="text/javascript">moveProgressBar('63.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">351352 should be kaprekar</span><span class='duration'>0.00009s</span></dd>
+    <script type="text/javascript">moveProgressBar('63.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">356643 should be kaprekar</span><span class='duration'>0.00009s</span></dd>
+    <script type="text/javascript">moveProgressBar('63.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">390313 should be kaprekar</span><span class='duration'>0.00009s</span></dd>
+    <script type="text/javascript">moveProgressBar('63.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">461539 should be kaprekar</span><span class='duration'>0.00009s</span></dd>
+    <script type="text/javascript">moveProgressBar('64.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">466830 should be kaprekar</span><span class='duration'>0.00009s</span></dd>
+    <script type="text/javascript">moveProgressBar('64.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">499500 should be kaprekar</span><span class='duration'>0.00009s</span></dd>
+    <script type="text/javascript">moveProgressBar('64.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">500500 should be kaprekar</span><span class='duration'>0.00009s</span></dd>
+    <script type="text/javascript">moveProgressBar('64.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">533170 should be kaprekar</span><span class='duration'>0.00009s</span></dd>
+    <script type="text/javascript">moveProgressBar('64.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">-10 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('64.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">-9 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('64.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">-1 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('65.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">0 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('65.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">5 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('65.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">7 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('65.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">10 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('65.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">100 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('65.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">122 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('66.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">1000 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('66.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">1004 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('66.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">10000 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('66.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">100000 should NOT be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('66.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">1000000 should NOT be kaprekar</span><span class='duration'>0.00008s</span></dd>
+  </dl>
+</div>
+<div id="div_group_12" class="example_group passed">
+  <dl style="margin-left: 0px;">
+  <dt id="example_group_12" class="passed">Kaprekar::PeterHickman</dt>
+    <script type="text/javascript">moveProgressBar('66.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">should respond to #kaprekar?</span><span class='duration'>0.00010s</span></dd>
+  </dl>
+</div>
+<div id="div_group_13" class="example_group passed">
+  <dl style="margin-left: 15px;">
+  <dt id="example_group_13" class="passed">#kaprekar?</dt>
+    <script type="text/javascript">makeRed('div_group_13');</script>
+    <script type="text/javascript">makeRed('example_group_13');</script>
+    <script type="text/javascript">moveProgressBar('66.9');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">1 should be kaprekar</span>
+      <span class="duration">0.00012s</span>
+      <div class="failure" id="failure_26">
+        <div class="message"><pre>expected: true value
+     got: false</pre></div>
+        <div class="backtrace"><pre>./spec/kaprekar/peterhickman_spec.rb:17:in `block (5 levels) in <module:Kaprekar>'</pre></div>
+    <pre class="ruby"><code><span class="linenum">15</span>        GOOD_KAPREKAR.each do |k|
+<span class="linenum">16</span>          it "#{k} should be kaprekar" do
+<span class="offending"><span class="linenum">17</span>            Kaprekar::PeterHickman.send(m,k).should be_true</span>
+<span class="linenum">18</span>          end
+<span class="linenum">19</span>        end
+<span class="linenum">20</span><span class="comment"># gem install syntax to get syntax highlighting</span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('67.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">9 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('67.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">45 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('67.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">55 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('67.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">99 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('67.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">297 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('67.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">703 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('68.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">999 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('68.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">2223 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('68.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">2728 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('68.5');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">4879 should be kaprekar</span>
+      <span class="duration">0.00011s</span>
+      <div class="failure" id="failure_27">
+        <div class="message"><pre>expected: true value
+     got: false</pre></div>
+        <div class="backtrace"><pre>./spec/kaprekar/peterhickman_spec.rb:17:in `block (5 levels) in <module:Kaprekar>'</pre></div>
+    <pre class="ruby"><code><span class="linenum">15</span>        GOOD_KAPREKAR.each do |k|
+<span class="linenum">16</span>          it "#{k} should be kaprekar" do
+<span class="offending"><span class="linenum">17</span>            Kaprekar::PeterHickman.send(m,k).should be_true</span>
+<span class="linenum">18</span>          end
+<span class="linenum">19</span>        end
+<span class="linenum">20</span><span class="comment"># gem install syntax to get syntax highlighting</span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('68.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">4950 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('68.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">5050 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('68.9');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">5292 should be kaprekar</span>
+      <span class="duration">0.00012s</span>
+      <div class="failure" id="failure_28">
+        <div class="message"><pre>expected: true value
+     got: false</pre></div>
+        <div class="backtrace"><pre>./spec/kaprekar/peterhickman_spec.rb:17:in `block (5 levels) in <module:Kaprekar>'</pre></div>
+    <pre class="ruby"><code><span class="linenum">15</span>        GOOD_KAPREKAR.each do |k|
+<span class="linenum">16</span>          it "#{k} should be kaprekar" do
+<span class="offending"><span class="linenum">17</span>            Kaprekar::PeterHickman.send(m,k).should be_true</span>
+<span class="linenum">18</span>          end
+<span class="linenum">19</span>        end
+<span class="linenum">20</span><span class="comment"># gem install syntax to get syntax highlighting</span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('69.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">7272 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('69.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">7777 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('69.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">9999 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('69.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">17344 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('69.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">22222 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('69.9');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">38962 should be kaprekar</span>
+      <span class="duration">0.00011s</span>
+      <div class="failure" id="failure_29">
+        <div class="message"><pre>expected: true value
+     got: false</pre></div>
+        <div class="backtrace"><pre>./spec/kaprekar/peterhickman_spec.rb:17:in `block (5 levels) in <module:Kaprekar>'</pre></div>
+    <pre class="ruby"><code><span class="linenum">15</span>        GOOD_KAPREKAR.each do |k|
+<span class="linenum">16</span>          it "#{k} should be kaprekar" do
+<span class="offending"><span class="linenum">17</span>            Kaprekar::PeterHickman.send(m,k).should be_true</span>
+<span class="linenum">18</span>          end
+<span class="linenum">19</span>        end
+<span class="linenum">20</span><span class="comment"># gem install syntax to get syntax highlighting</span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('70.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">77778 should be kaprekar</span><span class='duration'>0.00008s</span></dd>
+    <script type="text/javascript">moveProgressBar('70.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">82656 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('70.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">95121 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('70.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">99999 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('70.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">142857 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('70.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">148149 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('70.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">181819 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('71.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">187110 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('71.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">208495 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('71.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">318682 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('71.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">329967 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('71.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">351352 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('71.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">356643 should be kaprekar</span><span class='duration'>0.00007s</span></dd>
+    <script type="text/javascript">moveProgressBar('72.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">390313 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('72.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">461539 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('72.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">466830 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('72.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">499500 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('72.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">500500 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('72.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">533170 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('72.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">-10 should NOT be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('73.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">-9 should NOT be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('73.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">-1 should NOT be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('73.4');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">0 should NOT be kaprekar</span>
+      <span class="duration">0.00017s</span>
+      <div class="failure" id="failure_30">
+        <div class="message"><pre>expected: non-true value
+     got: true</pre></div>
+        <div class="backtrace"><pre>./spec/kaprekar/peterhickman_spec.rb:22:in `block (5 levels) in <module:Kaprekar>'</pre></div>
+    <pre class="ruby"><code><span class="linenum">20</span>        NOT_KAPREKAR.each do |k|
+<span class="linenum">21</span>          it "#{k} should NOT be kaprekar" do
+<span class="offending"><span class="linenum">22</span>            Kaprekar::PeterHickman.send(m,k).should_not be_true</span>
+<span class="linenum">23</span>          end
+<span class="linenum">24</span>        end
+<span class="linenum">25</span><span class="comment"># gem install syntax to get syntax highlighting</span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('73.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">5 should NOT be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('73.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">7 should NOT be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('73.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">10 should NOT be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('74.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">100 should NOT be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('74.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">122 should NOT be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('74.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">1000 should NOT be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('74.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">1004 should NOT be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('74.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">10000 should NOT be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('74.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">100000 should NOT be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('75.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">1000000 should NOT be kaprekar</span><span class='duration'>0.00012s</span></dd>
+  </dl>
+</div>
+<div id="div_group_14" class="example_group passed">
+  <dl style="margin-left: 0px;">
+  <dt id="example_group_14" class="passed">Kaprekar::Tamouse</dt>
+    <script type="text/javascript">moveProgressBar('75.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">should respond to #kaprekar1?</span><span class='duration'>0.00014s</span></dd>
+    <script type="text/javascript">moveProgressBar('75.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">should respond to #kaprekar2?</span><span class='duration'>0.00013s</span></dd>
+    <script type="text/javascript">moveProgressBar('75.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">should respond to #kaprekar3?</span><span class='duration'>0.00012s</span></dd>
+  </dl>
+</div>
+<div id="div_group_15" class="example_group passed">
+  <dl style="margin-left: 15px;">
+  <dt id="example_group_15" class="passed">#kaprekar1?</dt>
+    <script type="text/javascript">makeRed('div_group_15');</script>
+    <script type="text/javascript">makeRed('example_group_15');</script>
+    <script type="text/javascript">moveProgressBar('75.6');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">1 should be kaprekar</span>
+      <span class="duration">0.00017s</span>
+      <div class="failure" id="failure_31">
+        <div class="message"><pre>expected: true value
+     got: false</pre></div>
+        <div class="backtrace"><pre>./spec/kaprekar/tamouse_spec.rb:20:in `block (5 levels) in <module:Kaprekar>'</pre></div>
+    <pre class="ruby"><code><span class="linenum">18</span>        GOOD_KAPREKAR.each do |k|
+<span class="linenum">19</span>          it "#{k} should be kaprekar" do
+<span class="offending"><span class="linenum">20</span>            Kaprekar::Tamouse.send(m,k).should be_true</span>
+<span class="linenum">21</span>          end
+<span class="linenum">22</span>        end
+<span class="linenum">23</span><span class="comment"># gem install syntax to get syntax highlighting</span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('75.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">9 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('75.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">45 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('76.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">55 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('76.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">99 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('76.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">297 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('76.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">703 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('76.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">999 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('76.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">2223 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('77.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">2728 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('77.1');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">4879 should be kaprekar</span>
+      <span class="duration">0.00017s</span>
+      <div class="failure" id="failure_32">
+        <div class="message"><pre>expected: true value
+     got: false</pre></div>
+        <div class="backtrace"><pre>./spec/kaprekar/tamouse_spec.rb:20:in `block (5 levels) in <module:Kaprekar>'</pre></div>
+    <pre class="ruby"><code><span class="linenum">18</span>        GOOD_KAPREKAR.each do |k|
+<span class="linenum">19</span>          it "#{k} should be kaprekar" do
+<span class="offending"><span class="linenum">20</span>            Kaprekar::Tamouse.send(m,k).should be_true</span>
+<span class="linenum">21</span>          end
+<span class="linenum">22</span>        end
+<span class="linenum">23</span><span class="comment"># gem install syntax to get syntax highlighting</span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('77.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">4950 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('77.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">5050 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('77.6');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">5292 should be kaprekar</span>
+      <span class="duration">0.00017s</span>
+      <div class="failure" id="failure_33">
+        <div class="message"><pre>expected: true value
+     got: false</pre></div>
+        <div class="backtrace"><pre>./spec/kaprekar/tamouse_spec.rb:20:in `block (5 levels) in <module:Kaprekar>'</pre></div>
+    <pre class="ruby"><code><span class="linenum">18</span>        GOOD_KAPREKAR.each do |k|
+<span class="linenum">19</span>          it "#{k} should be kaprekar" do
+<span class="offending"><span class="linenum">20</span>            Kaprekar::Tamouse.send(m,k).should be_true</span>
+<span class="linenum">21</span>          end
+<span class="linenum">22</span>        end
+<span class="linenum">23</span><span class="comment"># gem install syntax to get syntax highlighting</span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('77.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">7272 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('77.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">7777 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('78.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">9999 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('78.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">17344 should be kaprekar</span><span class='duration'>0.00013s</span></dd>
+    <script type="text/javascript">moveProgressBar('78.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">22222 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('78.5');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">38962 should be kaprekar</span>
+      <span class="duration">0.00017s</span>
+      <div class="failure" id="failure_34">
+        <div class="message"><pre>expected: true value
+     got: false</pre></div>
+        <div class="backtrace"><pre>./spec/kaprekar/tamouse_spec.rb:20:in `block (5 levels) in <module:Kaprekar>'</pre></div>
+    <pre class="ruby"><code><span class="linenum">18</span>        GOOD_KAPREKAR.each do |k|
+<span class="linenum">19</span>          it "#{k} should be kaprekar" do
+<span class="offending"><span class="linenum">20</span>            Kaprekar::Tamouse.send(m,k).should be_true</span>
+<span class="linenum">21</span>          end
+<span class="linenum">22</span>        end
+<span class="linenum">23</span><span class="comment"># gem install syntax to get syntax highlighting</span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('78.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">77778 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('78.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">82656 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('79.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">95121 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('79.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">99999 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('79.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">142857 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('79.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">148149 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('79.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">181819 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('79.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">187110 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('79.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">208495 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('80.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">318682 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('80.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">329967 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('80.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">351352 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('80.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">356643 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('80.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">390313 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('80.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">461539 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('81.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">466830 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('81.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">499500 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('81.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">500500 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('81.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">533170 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('81.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">-10 should NOT be kaprekar</span><span class='duration'>0.00010s</span></dd>
+    <script type="text/javascript">moveProgressBar('81.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">-9 should NOT be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('81.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">-1 should NOT be kaprekar</span><span class='duration'>0.00010s</span></dd>
+    <script type="text/javascript">moveProgressBar('82.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">0 should NOT be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('82.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">5 should NOT be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('82.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">7 should NOT be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('82.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">10 should NOT be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('82.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">100 should NOT be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('82.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">122 should NOT be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('83.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">1000 should NOT be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('83.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">1004 should NOT be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('83.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">10000 should NOT be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('83.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">100000 should NOT be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('83.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">1000000 should NOT be kaprekar</span><span class='duration'>0.00011s</span></dd>
+  </dl>
+</div>
+<div id="div_group_16" class="example_group passed">
+  <dl style="margin-left: 15px;">
+  <dt id="example_group_16" class="passed">#kaprekar2?</dt>
+    <script type="text/javascript">moveProgressBar('83.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">1 should be kaprekar</span><span class='duration'>0.00013s</span></dd>
+    <script type="text/javascript">moveProgressBar('83.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">9 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('84.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">45 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('84.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">55 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('84.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">99 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('84.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">297 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('84.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">703 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('84.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">999 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('85.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">2223 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('85.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">2728 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('85.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">4879 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('85.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">4950 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('85.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">5050 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('85.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">5292 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('85.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">7272 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('86.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">7777 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('86.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">9999 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('86.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">17344 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('86.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">22222 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('86.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">38962 should be kaprekar</span><span class='duration'>0.00014s</span></dd>
+    <script type="text/javascript">moveProgressBar('86.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">77778 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('87.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">82656 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('87.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">95121 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('87.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">99999 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('87.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">142857 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('87.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">148149 should be kaprekar</span><span class='duration'>0.00013s</span></dd>
+    <script type="text/javascript">moveProgressBar('87.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">181819 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('87.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">187110 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('88.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">208495 should be kaprekar</span><span class='duration'>0.00013s</span></dd>
+    <script type="text/javascript">moveProgressBar('88.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">318682 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('88.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">329967 should be kaprekar</span><span class='duration'>0.00013s</span></dd>
+    <script type="text/javascript">moveProgressBar('88.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">351352 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('88.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">356643 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('88.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">390313 should be kaprekar</span><span class='duration'>0.00013s</span></dd>
+    <script type="text/javascript">moveProgressBar('89.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">461539 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('89.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">466830 should be kaprekar</span><span class='duration'>0.00013s</span></dd>
+    <script type="text/javascript">moveProgressBar('89.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">499500 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('89.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">500500 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('89.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">533170 should be kaprekar</span><span class='duration'>0.00014s</span></dd>
+    <script type="text/javascript">moveProgressBar('89.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">-10 should NOT be kaprekar</span><span class='duration'>0.00010s</span></dd>
+    <script type="text/javascript">moveProgressBar('89.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">-9 should NOT be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('90.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">-1 should NOT be kaprekar</span><span class='duration'>0.00010s</span></dd>
+    <script type="text/javascript">moveProgressBar('90.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">0 should NOT be kaprekar</span><span class='duration'>0.00010s</span></dd>
+    <script type="text/javascript">moveProgressBar('90.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">5 should NOT be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('90.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">7 should NOT be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('90.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">10 should NOT be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('90.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">100 should NOT be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('91.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">122 should NOT be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('91.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">1000 should NOT be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('91.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">1004 should NOT be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('91.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">10000 should NOT be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('91.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">100000 should NOT be kaprekar</span><span class='duration'>0.00013s</span></dd>
+    <script type="text/javascript">moveProgressBar('91.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">1000000 should NOT be kaprekar</span><span class='duration'>0.00014s</span></dd>
+  </dl>
+</div>
+<div id="div_group_17" class="example_group passed">
+  <dl style="margin-left: 15px;">
+  <dt id="example_group_17" class="passed">#kaprekar3?</dt>
+    <script type="text/javascript">moveProgressBar('91.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">1 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('92.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">9 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('92.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">45 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('92.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">55 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('92.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">99 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('92.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">297 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('92.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">703 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('93.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">999 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('93.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">2223 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('93.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">2728 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('93.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">4879 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('93.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">4950 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('93.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">5050 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('93.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">5292 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('94.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">7272 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('94.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">7777 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('94.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">9999 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('94.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">17344 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('94.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">22222 should be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('94.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">38962 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('95.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">77778 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('95.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">82656 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('95.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">95121 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('95.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">99999 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('95.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">142857 should be kaprekar</span><span class='duration'>0.00013s</span></dd>
+    <script type="text/javascript">moveProgressBar('95.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">148149 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('95.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">181819 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('96.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">187110 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('96.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">208495 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('96.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">318682 should be kaprekar</span><span class='duration'>0.00013s</span></dd>
+    <script type="text/javascript">moveProgressBar('96.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">329967 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('96.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">351352 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('96.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">356643 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('97.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">390313 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('97.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">461539 should be kaprekar</span><span class='duration'>0.00013s</span></dd>
+    <script type="text/javascript">moveProgressBar('97.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">466830 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('97.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">499500 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('97.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">500500 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('97.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">533170 should be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('97.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">-10 should NOT be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('98.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">-9 should NOT be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('98.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">-1 should NOT be kaprekar</span><span class='duration'>0.00010s</span></dd>
+    <script type="text/javascript">moveProgressBar('98.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">0 should NOT be kaprekar</span><span class='duration'>0.00010s</span></dd>
+    <script type="text/javascript">moveProgressBar('98.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">5 should NOT be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('98.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">7 should NOT be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('98.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">10 should NOT be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('99.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">100 should NOT be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('99.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">122 should NOT be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('99.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">1000 should NOT be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('99.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">1004 should NOT be kaprekar</span><span class='duration'>0.00011s</span></dd>
+    <script type="text/javascript">moveProgressBar('99.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">10000 should NOT be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('99.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">100000 should NOT be kaprekar</span><span class='duration'>0.00012s</span></dd>
+    <script type="text/javascript">moveProgressBar('100.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">1000000 should NOT be kaprekar</span><span class='duration'>0.00013s</span></dd>
+  </dl>
+</div>
+<script type="text/javascript">document.getElementById('duration').innerHTML = "Finished in <strong>0.13853 seconds</strong>";</script>
+<script type="text/javascript">document.getElementById('totals').innerHTML = "648 examples, 34 failures";</script>
+</div>
+</div>
+</body>
+</html>

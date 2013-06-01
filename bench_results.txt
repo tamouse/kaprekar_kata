@@ -1,0 +1,17 @@
+                                          user     system      total        real
+Kaprekar::Alphonse23#kaprekar0?       6.690000   0.000000   6.690000 (  6.701300)
+Kaprekar::Alphonse23#kaprekar1?      10.780000   0.000000  10.780000 ( 10.779514)
+Kaprekar::Alphonse23#kaprekar3?      10.750000   0.000000  10.750000 ( 10.755024)
+Kaprekar::Alphonse23#kaprekar4?       4.400000   0.000000   4.400000 (  4.406507)
+Kaprekar::Alphonse23#kaprekar5?       4.530000   0.000000   4.530000 (  4.525681)
+                                          user     system      total        real
+Kaprekar::HarryKakueki#try1          21.340000   0.000000  21.340000 ( 21.356905)
+Kaprekar::HarryKakueki#try2          13.000000   0.000000  13.000000 ( 13.003325)
+                                          user     system      total        real
+Kaprekar::JoshCreek#kaprekar?        22.610000   0.000000  22.610000 ( 22.622957)
+                                          user     system      total        real
+Kaprekar::PeterHickman#kaprekar?      4.330000   0.000000   4.330000 (  4.334546)
+                                          user     system      total        real
+Kaprekar::Tamouse#kaprekar1?          5.190000   0.000000   5.190000 (  5.198086)
+Kaprekar::Tamouse#kaprekar2?         18.220000   0.000000  18.220000 ( 18.228913)
+Kaprekar::Tamouse#kaprekar3?         16.220000   0.000000  16.220000 ( 16.231564)

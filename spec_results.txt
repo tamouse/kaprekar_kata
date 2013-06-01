@@ -1,0 +1,250 @@
+Run options: include {:focus=>true}
+
+All examples were filtered out; ignoring {:focus=>true}
+.....F.........F..F.....F......................F..........F.........F..F.....F......................F..........F.........F..F.....F......................F..........F.........F..F.....F.................................F.........F..F.....F.............................................................................F....................................................F.................................................................F.........F..F.....F......................F.............F.........F..F.....F...........................................................................................................................................
+
+Failures:
+
+  1) Kaprekar::Alphonse23#kaprekar0? 1 should be kaprekar
+     Failure/Error: Kaprekar::Alphonse23.send(m,k).should be_true
+       expected: true value
+            got: false
+     # ./spec/kaprekar/alphonse23_spec.rb:21:in `block (5 levels) in <module:Kaprekar>'
+
+  2) Kaprekar::Alphonse23#kaprekar0? 4879 should be kaprekar
+     Failure/Error: Kaprekar::Alphonse23.send(m,k).should be_true
+       expected: true value
+            got: false
+     # ./spec/kaprekar/alphonse23_spec.rb:21:in `block (5 levels) in <module:Kaprekar>'
+
+  3) Kaprekar::Alphonse23#kaprekar0? 5292 should be kaprekar
+     Failure/Error: Kaprekar::Alphonse23.send(m,k).should be_true
+       expected: true value
+            got: false
+     # ./spec/kaprekar/alphonse23_spec.rb:21:in `block (5 levels) in <module:Kaprekar>'
+
+  4) Kaprekar::Alphonse23#kaprekar0? 38962 should be kaprekar
+     Failure/Error: Kaprekar::Alphonse23.send(m,k).should be_true
+       expected: true value
+            got: false
+     # ./spec/kaprekar/alphonse23_spec.rb:21:in `block (5 levels) in <module:Kaprekar>'
+
+  5) Kaprekar::Alphonse23#kaprekar0? 0 should NOT be kaprekar
+     Failure/Error: Kaprekar::Alphonse23.send(m,k).should_not be_true
+       expected: non-true value
+            got: true
+     # ./spec/kaprekar/alphonse23_spec.rb:26:in `block (5 levels) in <module:Kaprekar>'
+
+  6) Kaprekar::Alphonse23#kaprekar1? 1 should be kaprekar
+     Failure/Error: Kaprekar::Alphonse23.send(m,k).should be_true
+       expected: true value
+            got: false
+     # ./spec/kaprekar/alphonse23_spec.rb:21:in `block (5 levels) in <module:Kaprekar>'
+
+  7) Kaprekar::Alphonse23#kaprekar1? 4879 should be kaprekar
+     Failure/Error: Kaprekar::Alphonse23.send(m,k).should be_true
+       expected: true value
+            got: false
+     # ./spec/kaprekar/alphonse23_spec.rb:21:in `block (5 levels) in <module:Kaprekar>'
+
+  8) Kaprekar::Alphonse23#kaprekar1? 5292 should be kaprekar
+     Failure/Error: Kaprekar::Alphonse23.send(m,k).should be_true
+       expected: true value
+            got: false
+     # ./spec/kaprekar/alphonse23_spec.rb:21:in `block (5 levels) in <module:Kaprekar>'
+
+  9) Kaprekar::Alphonse23#kaprekar1? 38962 should be kaprekar
+     Failure/Error: Kaprekar::Alphonse23.send(m,k).should be_true
+       expected: true value
+            got: false
+     # ./spec/kaprekar/alphonse23_spec.rb:21:in `block (5 levels) in <module:Kaprekar>'
+
+  10) Kaprekar::Alphonse23#kaprekar1? 0 should NOT be kaprekar
+     Failure/Error: Kaprekar::Alphonse23.send(m,k).should_not be_true
+       expected: non-true value
+            got: true
+     # ./spec/kaprekar/alphonse23_spec.rb:26:in `block (5 levels) in <module:Kaprekar>'
+
+  11) Kaprekar::Alphonse23#kaprekar3? 1 should be kaprekar
+     Failure/Error: Kaprekar::Alphonse23.send(m,k).should be_true
+       expected: true value
+            got: false
+     # ./spec/kaprekar/alphonse23_spec.rb:21:in `block (5 levels) in <module:Kaprekar>'
+
+  12) Kaprekar::Alphonse23#kaprekar3? 4879 should be kaprekar
+     Failure/Error: Kaprekar::Alphonse23.send(m,k).should be_true
+       expected: true value
+            got: false
+     # ./spec/kaprekar/alphonse23_spec.rb:21:in `block (5 levels) in <module:Kaprekar>'
+
+  13) Kaprekar::Alphonse23#kaprekar3? 5292 should be kaprekar
+     Failure/Error: Kaprekar::Alphonse23.send(m,k).should be_true
+       expected: true value
+            got: false
+     # ./spec/kaprekar/alphonse23_spec.rb:21:in `block (5 levels) in <module:Kaprekar>'
+
+  14) Kaprekar::Alphonse23#kaprekar3? 38962 should be kaprekar
+     Failure/Error: Kaprekar::Alphonse23.send(m,k).should be_true
+       expected: true value
+            got: false
+     # ./spec/kaprekar/alphonse23_spec.rb:21:in `block (5 levels) in <module:Kaprekar>'
+
+  15) Kaprekar::Alphonse23#kaprekar3? 0 should NOT be kaprekar
+     Failure/Error: Kaprekar::Alphonse23.send(m,k).should_not be_true
+       expected: non-true value
+            got: true
+     # ./spec/kaprekar/alphonse23_spec.rb:26:in `block (5 levels) in <module:Kaprekar>'
+
+  16) Kaprekar::Alphonse23#kaprekar4? 1 should be kaprekar
+     Failure/Error: Kaprekar::Alphonse23.send(m,k).should be_true
+       expected: true value
+            got: false
+     # ./spec/kaprekar/alphonse23_spec.rb:21:in `block (5 levels) in <module:Kaprekar>'
+
+  17) Kaprekar::Alphonse23#kaprekar4? 4879 should be kaprekar
+     Failure/Error: Kaprekar::Alphonse23.send(m,k).should be_true
+       expected: true value
+            got: false
+     # ./spec/kaprekar/alphonse23_spec.rb:21:in `block (5 levels) in <module:Kaprekar>'
+
+  18) Kaprekar::Alphonse23#kaprekar4? 5292 should be kaprekar
+     Failure/Error: Kaprekar::Alphonse23.send(m,k).should be_true
+       expected: true value
+            got: false
+     # ./spec/kaprekar/alphonse23_spec.rb:21:in `block (5 levels) in <module:Kaprekar>'
+
+  19) Kaprekar::Alphonse23#kaprekar4? 38962 should be kaprekar
+     Failure/Error: Kaprekar::Alphonse23.send(m,k).should be_true
+       expected: true value
+            got: false
+     # ./spec/kaprekar/alphonse23_spec.rb:21:in `block (5 levels) in <module:Kaprekar>'
+
+  20) Kaprekar::Alphonse23#kaprekar5? 1 should be kaprekar
+     Failure/Error: Kaprekar::Alphonse23.send(m,k).should be_true
+       expected: true value
+            got: false
+     # ./spec/kaprekar/alphonse23_spec.rb:21:in `block (5 levels) in <module:Kaprekar>'
+
+  21) Kaprekar::Alphonse23#kaprekar5? 4879 should be kaprekar
+     Failure/Error: Kaprekar::Alphonse23.send(m,k).should be_true
+       expected: true value
+            got: false
+     # ./spec/kaprekar/alphonse23_spec.rb:21:in `block (5 levels) in <module:Kaprekar>'
+
+  22) Kaprekar::Alphonse23#kaprekar5? 5292 should be kaprekar
+     Failure/Error: Kaprekar::Alphonse23.send(m,k).should be_true
+       expected: true value
+            got: false
+     # ./spec/kaprekar/alphonse23_spec.rb:21:in `block (5 levels) in <module:Kaprekar>'
+
+  23) Kaprekar::Alphonse23#kaprekar5? 38962 should be kaprekar
+     Failure/Error: Kaprekar::Alphonse23.send(m,k).should be_true
+       expected: true value
+            got: false
+     # ./spec/kaprekar/alphonse23_spec.rb:21:in `block (5 levels) in <module:Kaprekar>'
+
+  24) Kaprekar::HarryKakueki#try1 0 should NOT be kaprekar
+     Failure/Error: Kaprekar::HarryKakueki.send(m,k).should_not be_true
+       expected: non-true value
+            got: true
+     # ./spec/kaprekar/harrykakueki_spec.rb:23:in `block (5 levels) in <module:Kaprekar>'
+
+  25) Kaprekar::HarryKakueki#try2 0 should NOT be kaprekar
+     Failure/Error: Kaprekar::HarryKakueki.send(m,k).should_not be_true
+       expected: non-true value
+            got: true
+     # ./spec/kaprekar/harrykakueki_spec.rb:23:in `block (5 levels) in <module:Kaprekar>'
+
+  26) Kaprekar::PeterHickman#kaprekar? 1 should be kaprekar
+     Failure/Error: Kaprekar::PeterHickman.send(m,k).should be_true
+       expected: true value
+            got: false
+     # ./spec/kaprekar/peterhickman_spec.rb:17:in `block (5 levels) in <module:Kaprekar>'
+
+  27) Kaprekar::PeterHickman#kaprekar? 4879 should be kaprekar
+     Failure/Error: Kaprekar::PeterHickman.send(m,k).should be_true
+       expected: true value
+            got: false
+     # ./spec/kaprekar/peterhickman_spec.rb:17:in `block (5 levels) in <module:Kaprekar>'
+
+  28) Kaprekar::PeterHickman#kaprekar? 5292 should be kaprekar
+     Failure/Error: Kaprekar::PeterHickman.send(m,k).should be_true
+       expected: true value
+            got: false
+     # ./spec/kaprekar/peterhickman_spec.rb:17:in `block (5 levels) in <module:Kaprekar>'
+
+  29) Kaprekar::PeterHickman#kaprekar? 38962 should be kaprekar
+     Failure/Error: Kaprekar::PeterHickman.send(m,k).should be_true
+       expected: true value
+            got: false
+     # ./spec/kaprekar/peterhickman_spec.rb:17:in `block (5 levels) in <module:Kaprekar>'
+
+  30) Kaprekar::PeterHickman#kaprekar? 0 should NOT be kaprekar
+     Failure/Error: Kaprekar::PeterHickman.send(m,k).should_not be_true
+       expected: non-true value
+            got: true
+     # ./spec/kaprekar/peterhickman_spec.rb:22:in `block (5 levels) in <module:Kaprekar>'
+
+  31) Kaprekar::Tamouse#kaprekar1? 1 should be kaprekar
+     Failure/Error: Kaprekar::Tamouse.send(m,k).should be_true
+       expected: true value
+            got: false
+     # ./spec/kaprekar/tamouse_spec.rb:20:in `block (5 levels) in <module:Kaprekar>'
+
+  32) Kaprekar::Tamouse#kaprekar1? 4879 should be kaprekar
+     Failure/Error: Kaprekar::Tamouse.send(m,k).should be_true
+       expected: true value
+            got: false
+     # ./spec/kaprekar/tamouse_spec.rb:20:in `block (5 levels) in <module:Kaprekar>'
+
+  33) Kaprekar::Tamouse#kaprekar1? 5292 should be kaprekar
+     Failure/Error: Kaprekar::Tamouse.send(m,k).should be_true
+       expected: true value
+            got: false
+     # ./spec/kaprekar/tamouse_spec.rb:20:in `block (5 levels) in <module:Kaprekar>'
+
+  34) Kaprekar::Tamouse#kaprekar1? 38962 should be kaprekar
+     Failure/Error: Kaprekar::Tamouse.send(m,k).should be_true
+       expected: true value
+            got: false
+     # ./spec/kaprekar/tamouse_spec.rb:20:in `block (5 levels) in <module:Kaprekar>'
+
+Finished in 0.1145 seconds
+648 examples, 34 failures
+
+Failed examples:
+
+rspec ./spec/kaprekar/alphonse23_spec.rb:20 # Kaprekar::Alphonse23#kaprekar0? 1 should be kaprekar
+rspec ./spec/kaprekar/alphonse23_spec.rb:20 # Kaprekar::Alphonse23#kaprekar0? 4879 should be kaprekar
+rspec ./spec/kaprekar/alphonse23_spec.rb:20 # Kaprekar::Alphonse23#kaprekar0? 5292 should be kaprekar
+rspec ./spec/kaprekar/alphonse23_spec.rb:20 # Kaprekar::Alphonse23#kaprekar0? 38962 should be kaprekar
+rspec ./spec/kaprekar/alphonse23_spec.rb:25 # Kaprekar::Alphonse23#kaprekar0? 0 should NOT be kaprekar
+rspec ./spec/kaprekar/alphonse23_spec.rb:20 # Kaprekar::Alphonse23#kaprekar1? 1 should be kaprekar
+rspec ./spec/kaprekar/alphonse23_spec.rb:20 # Kaprekar::Alphonse23#kaprekar1? 4879 should be kaprekar
+rspec ./spec/kaprekar/alphonse23_spec.rb:20 # Kaprekar::Alphonse23#kaprekar1? 5292 should be kaprekar
+rspec ./spec/kaprekar/alphonse23_spec.rb:20 # Kaprekar::Alphonse23#kaprekar1? 38962 should be kaprekar
+rspec ./spec/kaprekar/alphonse23_spec.rb:25 # Kaprekar::Alphonse23#kaprekar1? 0 should NOT be kaprekar
+rspec ./spec/kaprekar/alphonse23_spec.rb:20 # Kaprekar::Alphonse23#kaprekar3? 1 should be kaprekar
+rspec ./spec/kaprekar/alphonse23_spec.rb:20 # Kaprekar::Alphonse23#kaprekar3? 4879 should be kaprekar
+rspec ./spec/kaprekar/alphonse23_spec.rb:20 # Kaprekar::Alphonse23#kaprekar3? 5292 should be kaprekar
+rspec ./spec/kaprekar/alphonse23_spec.rb:20 # Kaprekar::Alphonse23#kaprekar3? 38962 should be kaprekar
+rspec ./spec/kaprekar/alphonse23_spec.rb:25 # Kaprekar::Alphonse23#kaprekar3? 0 should NOT be kaprekar
+rspec ./spec/kaprekar/alphonse23_spec.rb:20 # Kaprekar::Alphonse23#kaprekar4? 1 should be kaprekar
+rspec ./spec/kaprekar/alphonse23_spec.rb:20 # Kaprekar::Alphonse23#kaprekar4? 4879 should be kaprekar
+rspec ./spec/kaprekar/alphonse23_spec.rb:20 # Kaprekar::Alphonse23#kaprekar4? 5292 should be kaprekar
+rspec ./spec/kaprekar/alphonse23_spec.rb:20 # Kaprekar::Alphonse23#kaprekar4? 38962 should be kaprekar
+rspec ./spec/kaprekar/alphonse23_spec.rb:20 # Kaprekar::Alphonse23#kaprekar5? 1 should be kaprekar
+rspec ./spec/kaprekar/alphonse23_spec.rb:20 # Kaprekar::Alphonse23#kaprekar5? 4879 should be kaprekar
+rspec ./spec/kaprekar/alphonse23_spec.rb:20 # Kaprekar::Alphonse23#kaprekar5? 5292 should be kaprekar
+rspec ./spec/kaprekar/alphonse23_spec.rb:20 # Kaprekar::Alphonse23#kaprekar5? 38962 should be kaprekar
+rspec ./spec/kaprekar/harrykakueki_spec.rb:22 # Kaprekar::HarryKakueki#try1 0 should NOT be kaprekar
+rspec ./spec/kaprekar/harrykakueki_spec.rb:22 # Kaprekar::HarryKakueki#try2 0 should NOT be kaprekar
+rspec ./spec/kaprekar/peterhickman_spec.rb:16 # Kaprekar::PeterHickman#kaprekar? 1 should be kaprekar
+rspec ./spec/kaprekar/peterhickman_spec.rb:16 # Kaprekar::PeterHickman#kaprekar? 4879 should be kaprekar
+rspec ./spec/kaprekar/peterhickman_spec.rb:16 # Kaprekar::PeterHickman#kaprekar? 5292 should be kaprekar
+rspec ./spec/kaprekar/peterhickman_spec.rb:16 # Kaprekar::PeterHickman#kaprekar? 38962 should be kaprekar
+rspec ./spec/kaprekar/peterhickman_spec.rb:21 # Kaprekar::PeterHickman#kaprekar? 0 should NOT be kaprekar
+rspec ./spec/kaprekar/tamouse_spec.rb:19 # Kaprekar::Tamouse#kaprekar1? 1 should be kaprekar
+rspec ./spec/kaprekar/tamouse_spec.rb:19 # Kaprekar::Tamouse#kaprekar1? 4879 should be kaprekar
+rspec ./spec/kaprekar/tamouse_spec.rb:19 # Kaprekar::Tamouse#kaprekar1? 5292 should be kaprekar
+rspec ./spec/kaprekar/tamouse_spec.rb:19 # Kaprekar::Tamouse#kaprekar1? 38962 should be kaprekar
