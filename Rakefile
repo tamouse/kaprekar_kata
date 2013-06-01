@@ -8,7 +8,7 @@ end
 
 desc "Run benchmarks"
 task :benchmarks do |t,args|
-  sh "ruby benchmarks/benchmark.rb"
+  sh "ruby -I lib benchmarks/benchmark.rb"
 end
 
 task :default => [:spec]
