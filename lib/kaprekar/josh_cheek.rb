@@ -1,7 +1,5 @@
- 
 module Kaprekar
-
-  module JoshCreek
+  module JoshCheek
 
     module_function
 
@@ -17,5 +15,4 @@ module Kaprekar
     end
 
   end
-
 end

@@ -1,7 +1,7 @@
 require "kaprekar/version"
 require 'kaprekar/alphonse23.rb'
 require 'kaprekar/harrykakueki.rb'
-require 'kaprekar/josh_creek.rb'
+require 'kaprekar/josh_cheek.rb'
 require 'kaprekar/peterhickman.rb'
 require 'kaprekar/tamouse.rb'
 
